@@ -54,10 +54,147 @@ export default function DatasetDetail() {
       </section>
 
       <section className="card">
-        <h3 style={{ marginTop: 0 }}>Raw Metadata (debug)</h3>
-        <pre style={{ whiteSpace: "pre-wrap", opacity: 0.85 }}>
-          {JSON.stringify(ds, null, 2)}
-        </pre>
+        <h3 style={{ marginTop: 0 }}>Additional Information</h3>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: 20,
+          }}
+        >
+          {/* Dataset Information */}
+          <div>
+            <h4
+              style={{
+                margin: "0 0 12px",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                color: "var(--secondary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Dataset Information
+            </h4>
+            <div
+              style={{
+                display: "grid",
+                gap: 8,
+                fontSize: "0.9rem",
+                lineHeight: 1.8,
+              }}
+            >
+              <div>
+                <b>Dataset ID:</b>
+              </div>
+              <div
+                style={{
+                  opacity: 0.8,
+                  wordBreak: "break-all",
+                  fontSize: "0.85rem",
+                }}
+              >
+                {ds.id}
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <b>Created:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {new Date(ds.metadata_created).toLocaleString()}
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <b>Last Updated:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {new Date(ds.metadata_modified).toLocaleString()}
+              </div>
+            </div>
+          </div>
+
+          {/* Access & Licensing */}
+          <div>
+            <h4
+              style={{
+                margin: "0 0 12px",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                color: "var(--secondary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Access & Licensing
+            </h4>
+            <div
+              style={{
+                display: "grid",
+                gap: 8,
+                fontSize: "0.9rem",
+                lineHeight: 1.8,
+              }}
+            >
+              <div>
+                <b>Visibility:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {ds.private ? "Private" : "Public"}
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <b>Open Data:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>{ds.isopen ? "Yes" : "No"}</div>
+              <div style={{ marginTop: 8 }}>
+                <b>License:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {ds.license_title || "Not specified"}
+              </div>
+            </div>
+          </div>
+
+          {/* Resources & Details */}
+          <div>
+            <h4
+              style={{
+                margin: "0 0 12px",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                color: "var(--secondary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+              }}
+            >
+              Resources & Details
+            </h4>
+            <div
+              style={{
+                display: "grid",
+                gap: 8,
+                fontSize: "0.9rem",
+                lineHeight: 1.8,
+              }}
+            >
+              <div>
+                <b>Resources:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {ds.num_resources} file{ds.num_resources !== 1 ? "s" : ""}
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <b>Tags:</b>
+              </div>
+              <div style={{ opacity: 0.8 }}>
+                {ds.num_tags} tag{ds.num_tags !== 1 ? "s" : ""}
+              </div>
+              <div style={{ marginTop: 8 }}>
+                <b>Status:</b>
+              </div>
+              <div style={{ opacity: 0.8, textTransform: "capitalize" }}>
+                ✓ {ds.state}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
