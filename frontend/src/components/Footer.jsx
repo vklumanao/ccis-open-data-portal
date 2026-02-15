@@ -21,7 +21,7 @@ export default function Footer() {
           <p>
             Caraga State University
             <br />
-            Information Technology Office
+            College of Computer and Information Sciences
           </p>
         </div>
       </div>

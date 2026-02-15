@@ -8,7 +8,12 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand">
-          <div className="brand-icon">📊</div>
+          <img
+            src="src/assets/images/logo/CSU-CCIS-Black-scaled.webp"
+            alt="CSU CCIS Logo"
+            className="brand-icon"
+            style={{ height: "44px", width: "auto", objectFit: "contain" }}
+          />
           <div className="brand-text">
             <div className="brand-name">CCIS Open Data Portal</div>
             <div className="brand-subtitle">Caraga State University</div>
