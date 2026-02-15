@@ -25,7 +25,7 @@ export default function Home() {
         <h3>Backend Status</h3>
         {statusQ.isLoading && <Loading text="Checking CKAN..." />}
         {statusQ.isError && <ErrorBox error={statusQ.error} />}
-        {statusQ.data && <p>✅ CKAN is reachable.</p>}
+        {statusQ.data && <p>CKAN is reachable.</p>}
       </section>
 
       <section>
