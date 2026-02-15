@@ -27,6 +27,8 @@ body {
     var(--background-light)
   );
   color: var(--text-main);
+  line-height: 1.6;
+  letter-spacing: 0.2px;
 }
 
 a {
@@ -47,9 +49,16 @@ a:hover {
 .card {
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 16px;
+  padding: 20px;
   background: rgba(15, 92, 46, 0.15);
   backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(212, 175, 55, 0.5);
+  background: rgba(15, 92, 46, 0.25);
+  box-shadow: 0 8px 20px rgba(15, 92, 46, 0.3);
 }
 
 .input,
@@ -73,16 +82,25 @@ button {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 11px 18px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
-  transition: 0.2s ease;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 button:hover {
   background: var(--secondary);
   color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
 }
 
 .grid {
@@ -116,4 +134,53 @@ button:hover {
   margin: 4px 0 0;
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+/* Typography Enhancements */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px;
+  color: var(--text-main);
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: 24px 0 12px;
+  color: var(--text-main);
+  border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+  padding-bottom: 8px;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 16px 0 8px;
+  color: var(--text-main);
+}
+
+h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 12px 0 6px;
+  color: var(--text-main);
+}
+
+p {
+  margin: 0 0 12px;
+  line-height: 1.7;
+}
+
+/* Spacing Utilities */
+.section {
+  margin: 32px 0;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--secondary);
 }

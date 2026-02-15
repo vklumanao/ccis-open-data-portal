@@ -1,10 +1,35 @@
+import "../styles/footer.css";
+
 export default function Footer() {
   return (
-    <footer
-      style={{ borderTop: "1px solid rgba(255,255,255,0.12)", marginTop: 30 }}
-    >
-      <div className="container" style={{ opacity: 0.75 }}>
-        © {new Date().getFullYear()} CCIS Open Data Portal • Powered by CKAN
+    <footer className="footer">
+      <div className="footer-content">
+        <div className="footer-section">
+          <h4>CCIS Open Data Portal</h4>
+          <p>Caraga State University</p>
+        </div>
+        <div className="footer-section">
+          <h4>Powered By</h4>
+          <p>
+            <a href="https://ckan.org" target="_blank" rel="noreferrer">
+              CKAN Data Portal Software
+            </a>
+          </p>
+        </div>
+        <div className="footer-section">
+          <h4>Contact</h4>
+          <p>
+            Caraga State University
+            <br />
+            Information Technology Office
+          </p>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>
+          © {new Date().getFullYear()} CCIS Open Data Portal. All rights
+          reserved.
+        </p>
       </div>
     </footer>
   );
