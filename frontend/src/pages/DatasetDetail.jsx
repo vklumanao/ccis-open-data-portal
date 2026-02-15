@@ -190,7 +190,7 @@ export default function DatasetDetail() {
                 <b>Status:</b>
               </div>
               <div style={{ opacity: 0.8, textTransform: "capitalize" }}>
-                ✓ {ds.state}
+                {ds.state}
               </div>
             </div>
           </div>
