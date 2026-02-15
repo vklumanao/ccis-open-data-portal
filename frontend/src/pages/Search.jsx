@@ -6,6 +6,16 @@ import Pagination from "../components/Pagination";
 import Loading from "../components/Loading";
 import ErrorBox from "../components/ErrorBox";
 
+function normalizeList(data) {
+  // Handles:
+  // 1) [ ... ]
+  // 2) { result: [ ... ] }
+  // 3) { success: true, result: [ ... ] }
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data.result)) return data.result;
+  return [];
+}
+
 export default function Search() {
   const [q, setQ] = useState("");
   const [org, setOrg] = useState("");
@@ -67,12 +77,13 @@ export default function Search() {
 
         <div>
           <label style={{ fontSize: 12, opacity: 0.8 }}>Organization</label>
+
           <select
             className="input"
             value={org}
             onChange={(e) => {
               setOrg(e.target.value);
-              onApply();
+              setPage(1);
             }}
           >
             <option value="">All</option>
