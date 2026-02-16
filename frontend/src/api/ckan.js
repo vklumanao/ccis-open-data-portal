@@ -1,5 +1,7 @@
 import { ckanAction } from "./ckanClient";
 
+const CKAN_URL = import.meta.env.VITE_CKAN_URL;
+
 export const statusShow = () => ckanAction("status_show");
 
 export const searchDatasets = (params) => ckanAction("package_search", params);
