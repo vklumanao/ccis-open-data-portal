@@ -7,7 +7,7 @@ export default function Pagination({ page, pageSize, total, onPageChange }) {
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       <button
         className="input"
-        style={{ width: 120 }}
+        style={{ width: 70 }}
         disabled={!canPrev}
         onClick={() => onPageChange(page - 1)}
       >
@@ -18,7 +18,7 @@ export default function Pagination({ page, pageSize, total, onPageChange }) {
       </div>
       <button
         className="input"
-        style={{ width: 120 }}
+        style={{ width: 70 }}
         disabled={!canNext}
         onClick={() => onPageChange(page + 1)}
       >
