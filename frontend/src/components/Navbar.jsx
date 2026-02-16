@@ -12,7 +12,7 @@ export default function Navbar() {
             src="src\assets\images\logo\CSU-CCIS-Black-scaled.webp"
             alt="CSU CCIS Logo"
             className="brand-icon"
-            style={{ height: "44px", width: "auto", objectFit: "contain" }}
+            style={{ height: "100px", width: "auto", objectFit: "contain" }}
           />
           <div className="brand-text">
             <div className="brand-name">CCIS Open Data Portal</div>
