@@ -60,128 +60,255 @@ export default function Search() {
   }
 
   return (
-    <div className="grid" style={{ gap: 14 }}>
-      <h1 style={{ marginBottom: 0 }}>Datasets</h1>
+    <div className="page-grid">
+      <div>
+        <h1
+          style={{
+            marginTop: 0,
+            marginBottom: "var(--spacing-lg)",
+            fontSize: "var(--font-size-3xl)",
+            color: "var(--text-primary)",
+          }}
+        >
+          Browse Datasets
+        </h1>
 
-      <div className="card grid grid-3">
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Search</label>
-          <input
-            className="input"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            onBlur={onApply}
-            placeholder="Search title, description, tags..."
-          />
-        </div>
-
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Organization</label>
-
-          <select
-            className="input"
-            value={org}
-            onChange={(e) => {
-              setOrg(e.target.value);
-              setPage(1);
+        <div className="card" style={{ marginBottom: "var(--spacing-lg)" }}>
+          <h3
+            style={{
+              marginTop: 0,
+              marginBottom: "var(--spacing-lg)",
+              fontSize: "var(--font-size-lg)",
+              fontWeight: "var(--font-weight-bold)",
+              color: "var(--text-primary)",
             }}
           >
-            <option value="">All</option>
-            {orgsQ.data?.map((o) => (
-              <option key={o.id} value={o.name}>
-                {o.title || o.name}
-              </option>
-            ))}
-          </select>
-        </div>
+            Search & Filter
+          </h3>
 
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Category</label>
-          <select
-            className="input"
-            value={group}
-            onChange={(e) => {
-              setGroup(e.target.value);
-              onApply();
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "var(--spacing-lg)",
+              marginBottom: "var(--spacing-lg)",
             }}
           >
-            <option value="">All</option>
-            {groupsQ.data?.map((g) => (
-              <option key={g.id} value={g.name}>
-                {g.title || g.name}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div>
+              <label
+                style={{
+                  fontSize: "var(--font-size-xs)",
+                  fontWeight: "var(--font-weight-semibold)",
+                  color: "var(--text-light)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                  display: "block",
+                  marginBottom: "var(--spacing-sm)",
+                }}
+              >
+                Search
+              </label>
+              <input
+                className="input"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                onBlur={onApply}
+                placeholder="Search title, description..."
+                style={{
+                  width: "100%",
+                  padding: "var(--spacing-md) var(--spacing-lg)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border)",
+                  fontSize: "var(--font-size-base)",
+                }}
+              />
+            </div>
 
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Tag</label>
-          <input
-            className="input"
-            value={tag}
-            onChange={(e) => {
-              setTag(e.target.value);
-              onApply();
-            }}
-            placeholder="e.g. enrollment"
-          />
-        </div>
+            <div>
+              <label
+                style={{
+                  fontSize: "var(--font-size-xs)",
+                  fontWeight: "var(--font-weight-semibold)",
+                  color: "var(--text-light)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                  display: "block",
+                  marginBottom: "var(--spacing-sm)",
+                }}
+              >
+                Organization
+              </label>
+              <select
+                className="input"
+                value={org}
+                onChange={(e) => {
+                  setOrg(e.target.value);
+                  onApply();
+                }}
+                style={{
+                  width: "100%",
+                  padding: "var(--spacing-md) var(--spacing-lg)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border)",
+                  fontSize: "var(--font-size-base)",
+                }}
+              >
+                <option value="">All Organizations</option>
+                {normalizeList(orgsQ.data).map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.title || o.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Resource Format</label>
-          <input
-            className="input"
-            value={format}
-            onChange={(e) => {
-              setFormat(e.target.value);
-              onApply();
-            }}
-            placeholder="e.g. CSV, PDF"
-          />
-        </div>
+            <div>
+              <label
+                style={{
+                  fontSize: "var(--font-size-xs)",
+                  fontWeight: "var(--font-weight-semibold)",
+                  color: "var(--text-light)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                  display: "block",
+                  marginBottom: "var(--spacing-sm)",
+                }}
+              >
+                Category
+              </label>
+              <select
+                className="input"
+                value={group}
+                onChange={(e) => {
+                  setGroup(e.target.value);
+                  onApply();
+                }}
+                style={{
+                  width: "100%",
+                  padding: "var(--spacing-md) var(--spacing-lg)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border)",
+                  fontSize: "var(--font-size-base)",
+                }}
+              >
+                <option value="">All Categories</option>
+                {normalizeList(groupsQ.data).map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.title || g.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div>
-          <label style={{ fontSize: 12, opacity: 0.8 }}>Sort</label>
-          <select
-            className="input"
-            value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-              onApply();
+            <div>
+              <label
+                style={{
+                  fontSize: "var(--font-size-xs)",
+                  fontWeight: "var(--font-weight-semibold)",
+                  color: "var(--text-light)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                  display: "block",
+                  marginBottom: "var(--spacing-sm)",
+                }}
+              >
+                Sort By
+              </label>
+              <select
+                className="input"
+                value={sort}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                  onApply();
+                }}
+                style={{
+                  width: "100%",
+                  padding: "var(--spacing-md) var(--spacing-lg)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border)",
+                  fontSize: "var(--font-size-base)",
+                }}
+              >
+                <option value="metadata_modified desc">
+                  Most Recently Updated
+                </option>
+                <option value="metadata_created desc">
+                  Most Recently Created
+                </option>
+                <option value="title asc">Title (A-Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              gap: "var(--spacing-md)",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
             }}
           >
-            <option value="metadata_modified desc">Recently Updated</option>
-            <option value="title_string asc">Title A-Z</option>
-            <option value="title_string desc">Title Z-A</option>
-          </select>
+            <div
+              style={{
+                fontSize: "var(--font-size-base)",
+                color: "var(--text-secondary)",
+                fontWeight: "var(--font-weight-medium)",
+              }}
+            >
+              {total} dataset{total !== 1 ? "s" : ""} found
+            </div>
+            <button
+              onClick={onApply}
+              style={{
+                padding: "var(--spacing-md) var(--spacing-lg)",
+                background: "var(--primary)",
+                color: "white",
+                border: "none",
+                borderRadius: "var(--radius-md)",
+                fontWeight: "var(--font-weight-semibold)",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = "var(--primary-light)";
+                e.target.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "var(--primary)";
+                e.target.style.transform = "translateY(0)";
+              }}
+            >
+              Apply Filters
+            </button>
+          </div>
         </div>
-      </div>
 
-      {datasetsQ.isLoading && <Loading text="Loading datasets..." />}
-      {datasetsQ.isError && <ErrorBox error={datasetsQ.error} />}
+        {/* Results */}
+        {datasetsQ.isLoading && <Loading text="Searching datasets..." />}
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <p style={{ opacity: 0.8, margin: 0 }}>
-          Results: <b>{total}</b>
-        </p>
-        <Pagination
-          page={page}
-          pageSize={pageSize}
-          total={total}
-          onPageChange={setPage}
-        />
-      </div>
+        {datasetsQ.isError && <ErrorBox error={datasetsQ.error} />}
 
-      <div className="grid grid-cards">
-        {datasetsQ.data?.results?.map((ds) => (
-          <DatasetCard key={ds.id} dataset={ds} />
-        ))}
+        {datasetsQ.data && (
+          <div>
+            <div
+              className="grid grid-cards"
+              style={{ marginBottom: "var(--spacing-2xl)" }}
+            >
+              {datasetsQ.data.results?.map((ds) => (
+                <DatasetCard key={ds.id} dataset={ds} />
+              ))}
+            </div>
+
+            {total > pageSize && (
+              <Pagination
+                current={page}
+                total={Math.ceil(total / pageSize)}
+                onPageChange={setPage}
+              />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

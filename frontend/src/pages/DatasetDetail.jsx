@@ -20,56 +20,192 @@ export default function DatasetDetail() {
   const ds = q.data;
 
   return (
-    <div className="grid" style={{ gap: 14 }}>
+    <div className="page-grid">
       <section className="card">
-        <h1 style={{ marginTop: 0 }}>{ds.title || ds.name}</h1>
-        {ds.organization?.title ? <Badge>{ds.organization.title}</Badge> : null}
-        {(ds.tags || []).map((t) => (
-          <Badge key={t.name}>#{t.name}</Badge>
-        ))}
+        <h1
+          style={{
+            marginTop: 0,
+            marginBottom: "var(--spacing-md)",
+            fontSize: "var(--font-size-3xl)",
+            color: "var(--text-primary)",
+          }}
+        >
+          {ds.title || ds.name}
+        </h1>
 
-        <p style={{ opacity: 0.85 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "var(--spacing-md)",
+            flexWrap: "wrap",
+            marginBottom: "var(--spacing-lg)",
+          }}
+        >
+          {ds.organization?.title ? (
+            <Badge variant="accent">{ds.organization.title}</Badge>
+          ) : null}
+          {(ds.tags || []).slice(0, 5).map((t) => (
+            <Badge key={t.name} variant="default">
+              #{t.name}
+            </Badge>
+          ))}
+        </div>
+
+        <p
+          style={{
+            fontSize: "var(--font-size-base)",
+            color: "var(--text-secondary)",
+            lineHeight: 1.8,
+            marginBottom: "var(--spacing-lg)",
+          }}
+        >
           {ds.notes || "No description provided."}
         </p>
 
-        <div style={{ display: "grid", gap: 6, opacity: 0.85 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "var(--spacing-lg)",
+            padding: "var(--spacing-lg)",
+            background: "var(--background)",
+            borderRadius: "var(--radius-md)",
+            border: "1px solid var(--border-light)",
+          }}
+        >
           <div>
-            <b>Author:</b> {ds.author || "—"}
+            <div
+              style={{
+                fontSize: "var(--font-size-xs)",
+                fontWeight: "var(--font-weight-semibold)",
+                color: "var(--text-light)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--spacing-sm)",
+              }}
+            >
+              Author
+            </div>
+            <div
+              style={{
+                color: "var(--text-primary)",
+                fontWeight: "var(--font-weight-medium)",
+              }}
+            >
+              {ds.author || "—"}
+            </div>
           </div>
           <div>
-            <b>Maintainer:</b> {ds.maintainer || "—"}
+            <div
+              style={{
+                fontSize: "var(--font-size-xs)",
+                fontWeight: "var(--font-weight-semibold)",
+                color: "var(--text-light)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--spacing-sm)",
+              }}
+            >
+              Maintainer
+            </div>
+            <div
+              style={{
+                color: "var(--text-primary)",
+                fontWeight: "var(--font-weight-medium)",
+              }}
+            >
+              {ds.maintainer || "—"}
+            </div>
           </div>
           <div>
-            <b>Last updated:</b> {ds.metadata_modified || "—"}
+            <div
+              style={{
+                fontSize: "var(--font-size-xs)",
+                fontWeight: "var(--font-weight-semibold)",
+                color: "var(--text-light)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--spacing-sm)",
+              }}
+            >
+              License
+            </div>
+            <div
+              style={{
+                color: "var(--text-primary)",
+                fontWeight: "var(--font-weight-medium)",
+              }}
+            >
+              {ds.license_title || ds.license_id || "—"}
+            </div>
           </div>
           <div>
-            <b>License:</b> {ds.license_title || ds.license_id || "—"}
+            <div
+              style={{
+                fontSize: "var(--font-size-xs)",
+                fontWeight: "var(--font-weight-semibold)",
+                color: "var(--text-light)",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--spacing-sm)",
+              }}
+            >
+              Last Updated
+            </div>
+            <div
+              style={{
+                color: "var(--text-primary)",
+                fontWeight: "var(--font-weight-medium)",
+              }}
+            >
+              {new Date(ds.metadata_modified).toLocaleDateString()}
+            </div>
           </div>
         </div>
       </section>
 
-      <section>
-        <h2>Resources</h2>
+      <section className="card">
+        <h2
+          style={{
+            marginTop: 0,
+            marginBottom: "var(--spacing-lg)",
+            fontSize: "var(--font-size-2xl)",
+            fontWeight: "var(--font-weight-bold)",
+            color: "var(--text-primary)",
+          }}
+        >
+          Resources
+        </h2>
         <ResourceList resources={ds.resources || []} />
       </section>
 
       <section className="card">
-        <h3 style={{ marginTop: 0 }}>Additional Information</h3>
+        <h3
+          style={{
+            marginTop: 0,
+            marginBottom: "var(--spacing-lg)",
+            fontSize: "var(--font-size-xl)",
+            fontWeight: "var(--font-weight-bold)",
+            color: "var(--text-primary)",
+          }}
+        >
+          Metadata Details
+        </h3>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: 20,
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "var(--spacing-xl)",
           }}
         >
           {/* Dataset Information */}
           <div>
             <h4
               style={{
-                margin: "0 0 12px",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                color: "var(--secondary)",
+                margin: "0 0 var(--spacing-lg)",
+                fontSize: "var(--font-size-base)",
+                fontWeight: "var(--font-weight-bold)",
+                color: "var(--primary)",
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
               }}
@@ -79,34 +215,62 @@ export default function DatasetDetail() {
             <div
               style={{
                 display: "grid",
-                gap: 8,
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
+                gap: "var(--spacing-lg)",
+                fontSize: "var(--font-size-sm)",
               }}
             >
               <div>
-                <b>Dataset ID:</b>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Dataset ID
+                </div>
+                <div
+                  style={{
+                    color: "var(--text-secondary)",
+                    wordBreak: "break-all",
+                    fontFamily: "var(--font-family-mono)",
+                    fontSize: "var(--font-size-xs)",
+                    background: "var(--background)",
+                    padding: "var(--spacing-md)",
+                    borderRadius: "var(--radius-sm)",
+                    border: "1px solid var(--border-light)",
+                  }}
+                >
+                  {ds.id}
+                </div>
               </div>
-              <div
-                style={{
-                  opacity: 0.8,
-                  wordBreak: "break-all",
-                  fontSize: "0.85rem",
-                }}
-              >
-                {ds.id}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Created
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {new Date(ds.metadata_created).toLocaleString()}
+                </div>
               </div>
-              <div style={{ marginTop: 8 }}>
-                <b>Created:</b>
-              </div>
-              <div style={{ opacity: 0.8 }}>
-                {new Date(ds.metadata_created).toLocaleString()}
-              </div>
-              <div style={{ marginTop: 8 }}>
-                <b>Last Updated:</b>
-              </div>
-              <div style={{ opacity: 0.8 }}>
-                {new Date(ds.metadata_modified).toLocaleString()}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Last Updated
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {new Date(ds.metadata_modified).toLocaleString()}
+                </div>
               </div>
             </div>
           </div>
@@ -115,10 +279,10 @@ export default function DatasetDetail() {
           <div>
             <h4
               style={{
-                margin: "0 0 12px",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                color: "var(--secondary)",
+                margin: "0 0 var(--spacing-lg)",
+                fontSize: "var(--font-size-base)",
+                fontWeight: "var(--font-weight-bold)",
+                color: "var(--primary)",
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
               }}
@@ -128,26 +292,51 @@ export default function DatasetDetail() {
             <div
               style={{
                 display: "grid",
-                gap: 8,
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
+                gap: "var(--spacing-lg)",
+                fontSize: "var(--font-size-sm)",
               }}
             >
               <div>
-                <b>Visibility:</b>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Visibility
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {ds.private ? "Private" : "Public"}
+                </div>
               </div>
-              <div style={{ opacity: 0.8 }}>
-                {ds.private ? "Private" : "Public"}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Open Data
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {ds.isopen ? "Yes" : "No"}
+                </div>
               </div>
-              <div style={{ marginTop: 8 }}>
-                <b>Open Data:</b>
-              </div>
-              <div style={{ opacity: 0.8 }}>{ds.isopen ? "Yes" : "No"}</div>
-              <div style={{ marginTop: 8 }}>
-                <b>License:</b>
-              </div>
-              <div style={{ opacity: 0.8 }}>
-                {ds.license_title || "Not specified"}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  License
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {ds.license_title || "Not specified"}
+                </div>
               </div>
             </div>
           </div>
@@ -156,10 +345,10 @@ export default function DatasetDetail() {
           <div>
             <h4
               style={{
-                margin: "0 0 12px",
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                color: "var(--secondary)",
+                margin: "0 0 var(--spacing-lg)",
+                fontSize: "var(--font-size-base)",
+                fontWeight: "var(--font-weight-bold)",
+                color: "var(--primary)",
                 textTransform: "uppercase",
                 letterSpacing: "0.5px",
               }}
@@ -169,28 +358,56 @@ export default function DatasetDetail() {
             <div
               style={{
                 display: "grid",
-                gap: 8,
-                fontSize: "0.9rem",
-                lineHeight: 1.8,
+                gap: "var(--spacing-lg)",
+                fontSize: "var(--font-size-sm)",
               }}
             >
               <div>
-                <b>Resources:</b>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Resources
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {ds.num_resources} file{ds.num_resources !== 1 ? "s" : ""}
+                </div>
               </div>
-              <div style={{ opacity: 0.8 }}>
-                {ds.num_resources} file{ds.num_resources !== 1 ? "s" : ""}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Tags
+                </div>
+                <div style={{ color: "var(--text-secondary)" }}>
+                  {ds.num_tags} tag{ds.num_tags !== 1 ? "s" : ""}
+                </div>
               </div>
-              <div style={{ marginTop: 8 }}>
-                <b>Tags:</b>
-              </div>
-              <div style={{ opacity: 0.8 }}>
-                {ds.num_tags} tag{ds.num_tags !== 1 ? "s" : ""}
-              </div>
-              <div style={{ marginTop: 8 }}>
-                <b>Status:</b>
-              </div>
-              <div style={{ opacity: 0.8, textTransform: "capitalize" }}>
-                {ds.state}
+              <div>
+                <div
+                  style={{
+                    fontWeight: "var(--font-weight-semibold)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--spacing-sm)",
+                  }}
+                >
+                  Status
+                </div>
+                <div
+                  style={{
+                    color: "var(--text-secondary)",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {ds.state || "active"}
+                </div>
               </div>
             </div>
           </div>

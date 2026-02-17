@@ -11,11 +11,21 @@ export default function ResourceList({ resources = [] }) {
   const [previewResource, setPreviewResource] = useState(null);
 
   if (!resources.length)
-    return <p style={{ opacity: 0.8 }}>No resources yet.</p>;
+    return (
+      <p
+        style={{
+          opacity: 0.7,
+          fontSize: "var(--font-size-base)",
+          color: "var(--text-secondary)",
+        }}
+      >
+        No resources yet.
+      </p>
+    );
 
   return (
     <>
-      <div className="grid" style={{ gap: 10 }}>
+      <div className="grid" style={{ gap: "var(--spacing-lg)" }}>
         {resources.map((r) => (
           <div
             key={r.id}
@@ -26,24 +36,46 @@ export default function ResourceList({ resources = [] }) {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                gap: 12,
+                gap: "var(--spacing-lg)",
                 flex: 1,
+                flexWrap: "wrap",
+                alignItems: "flex-start",
               }}
             >
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <b>{r.name || "Resource"}</b>
+              <div style={{ flex: 1, minWidth: 200 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "var(--spacing-md)",
+                    marginBottom: "var(--spacing-md)",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontWeight: "var(--font-weight-bold)",
+                      fontSize: "var(--font-size-base)",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    {r.name || "Resource"}
+                  </span>
                   {r.size && (
-                    <span style={{ fontSize: "0.85rem", opacity: 0.7 }}>
+                    <span
+                      style={{
+                        fontSize: "var(--font-size-sm)",
+                        color: "var(--text-light)",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       • {formatFileSize(r.size)}
                     </span>
                   )}
                 </div>
                 <div
                   style={{
-                    marginTop: 6,
                     display: "flex",
-                    gap: 6,
+                    gap: "var(--spacing-sm)",
                     flexWrap: "wrap",
                   }}
                 >
@@ -53,11 +85,11 @@ export default function ResourceList({ resources = [] }) {
                     </Badge>
                   )}
                   {r.mimetype && r.mimetype !== r.format && (
-                    <Badge>{r.mimetype}</Badge>
+                    <Badge variant="secondary">{r.mimetype}</Badge>
                   )}
                   {r.last_modified && (
-                    <Badge style={{ fontSize: "0.8rem", opacity: 0.7 }}>
-                      Updated: {new Date(r.last_modified).toLocaleDateString()}
+                    <Badge variant="secondary">
+                      {new Date(r.last_modified).toLocaleDateString()}
                     </Badge>
                   )}
                 </div>
@@ -66,58 +98,49 @@ export default function ResourceList({ resources = [] }) {
               <div
                 style={{
                   display: "flex",
-                  gap: 8,
+                  gap: "var(--spacing-md)",
                   flexWrap: "wrap",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                 }}
               >
                 {isPreviewable(r.format) && (
                   <button
                     onClick={() => setPreviewResource(r)}
                     style={{
-                      padding: "8px 12px",
-                      borderRadius: "8px",
+                      padding: "var(--spacing-sm) var(--spacing-lg)",
+                      borderRadius: "var(--radius-md)",
                       background: "transparent",
-                      border: "1px solid var(--secondary)",
-                      color: "var(--secondary)",
+                      border: "1.5px solid var(--primary)",
+                      color: "var(--primary)",
                       cursor: "pointer",
-                      fontWeight: 600,
-                      fontSize: "0.85rem",
+                      fontWeight: "var(--font-weight-semibold)",
+                      fontSize: "var(--font-size-sm)",
                       transition: "all 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.background = "rgba(212, 175, 55, 0.1)";
+                      e.target.style.background = "rgba(26, 95, 63, 0.08)";
+                      e.target.style.borderColor = "var(--primary-light)";
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.background = "transparent";
+                      e.target.style.borderColor = "var(--primary)";
                     }}
                     title={`Preview ${r.format} file`}
                   >
                     Preview
                   </button>
                 )}
-                {!isPreviewable(r.format) && r.format && (
-                  <span
-                    style={{
-                      fontSize: "0.85rem",
-                      opacity: 0.6,
-                      padding: "4px 0",
-                    }}
-                  >
-                    Download to view
-                  </span>
-                )}
                 <a
-                  className="input"
                   style={{
-                    display: "inline-block",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    padding: "var(--spacing-sm) var(--spacing-lg)",
+                    borderRadius: "var(--radius-md)",
                     background: "var(--primary)",
                     color: "#fff",
                     textDecoration: "none",
-                    fontWeight: 600,
-                    fontSize: "0.85rem",
+                    fontWeight: "var(--font-weight-semibold)",
+                    fontSize: "var(--font-size-sm)",
                     cursor: "pointer",
                     textAlign: "center",
                     transition: "all 0.2s ease",
@@ -125,6 +148,14 @@ export default function ResourceList({ resources = [] }) {
                   href={r.url}
                   download
                   title="Download"
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "var(--primary-light)";
+                    e.target.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "var(--primary)";
+                    e.target.style.transform = "translateY(0)";
+                  }}
                 >
                   Download
                 </a>
@@ -132,7 +163,14 @@ export default function ResourceList({ resources = [] }) {
             </div>
 
             {r.description ? (
-              <p style={{ marginTop: 10, opacity: 0.8, fontSize: "0.9rem" }}>
+              <p
+                style={{
+                  marginTop: "var(--spacing-lg)",
+                  opacity: 0.8,
+                  fontSize: "var(--font-size-sm)",
+                  color: "var(--text-secondary)",
+                }}
+              >
                 {r.description}
               </p>
             ) : null}

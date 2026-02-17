@@ -21,16 +21,16 @@ export default function AnalyticsCard() {
   if (datasetsQ.isLoading || orgsQ.isLoading || groupsQ.isLoading)
     return (
       <section className="card">
-        <h3 style={{ marginTop: 0 }}>Analytics</h3>
-        <Loading text="Loading analytics..." />
+        <h3 style={{ marginTop: 0 }}>Analytics Overview</h3>
+        <Loading text="Loading statistics..." />
       </section>
     );
 
   if (datasetsQ.isError || orgsQ.isError || groupsQ.isError)
     return (
       <section className="card">
-        <h3 style={{ marginTop: 0 }}>Analytics</h3>
-        <p style={{ color: "#ffa0a0" }}>Failed to load analytics.</p>
+        <h3 style={{ marginTop: 0 }}>Analytics Overview</h3>
+        <p style={{ color: "var(--error)" }}>Unable to load analytics.</p>
       </section>
     );
 
@@ -41,24 +41,82 @@ export default function AnalyticsCard() {
 
   return (
     <section className="card">
-      <h3 style={{ marginTop: 0 }}>Analytics</h3>
+      <h3
+        style={{
+          marginTop: 0,
+          fontSize: "var(--font-size-xl)",
+          fontWeight: "var(--font-weight-bold)",
+          color: "var(--text-primary)",
+          marginBottom: "var(--spacing-xl)",
+        }}
+      >
+        Analytics Overview
+      </h3>
 
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 160px", minWidth: 140 }}>
-          <div style={{ fontSize: 14, opacity: 0.85 }}>Datasets</div>
-          <div style={{ fontSize: 24, fontWeight: 700 }}>{datasetsCount}</div>
-        </div>
-
-        <div style={{ flex: "1 1 160px", minWidth: 140 }}>
-          <div style={{ fontSize: 14, opacity: 0.85 }}>Organizations</div>
-          <div style={{ fontSize: 24, fontWeight: 700 }}>{orgsCount}</div>
-        </div>
-
-        <div style={{ flex: "1 1 160px", minWidth: 140 }}>
-          <div style={{ fontSize: 14, opacity: 0.85 }}>Categories</div>
-          <div style={{ fontSize: 24, fontWeight: 700 }}>{groupsCount}</div>
-        </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: "var(--spacing-lg)",
+        }}
+      >
+        <StatTile label="Datasets" value={datasetsCount} icon="📊" />
+        <StatTile label="Organizations" value={orgsCount} icon="🏢" />
+        <StatTile label="Categories" value={groupsCount} icon="📁" />
       </div>
     </section>
+  );
+}
+
+function StatTile({ label, value, icon }) {
+  return (
+    <div
+      style={{
+        background: "var(--background-alt)",
+        border: "1px solid var(--border-light)",
+        borderRadius: "var(--radius-lg)",
+        padding: "var(--spacing-lg)",
+        textAlign: "center",
+        transition: "all 0.2s ease",
+        cursor: "default",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "var(--primary)";
+        e.currentTarget.style.boxShadow = "0 4px 12px rgba(26, 95, 63, 0.1)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "var(--border-light)";
+        e.currentTarget.style.boxShadow = "0 1px 3px rgba(0, 0, 0, 0.08)";
+      }}
+    >
+      <div
+        style={{
+          fontSize: "28px",
+          marginBottom: "var(--spacing-md)",
+        }}
+      >
+        {icon}
+      </div>
+      <div
+        style={{
+          fontSize: "var(--font-size-sm)",
+          color: "var(--text-secondary)",
+          fontWeight: "var(--font-weight-medium)",
+          marginBottom: "var(--spacing-sm)",
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          fontSize: "32px",
+          fontWeight: "var(--font-weight-bold)",
+          color: "var(--primary)",
+          lineHeight: 1,
+        }}
+      >
+        {value}
+      </div>
+    </div>
   );
 }
