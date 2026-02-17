@@ -32,10 +32,10 @@ export default function Search() {
 
   const fq = useMemo(() => {
     const filters = [];
-    if (org) filters.push(`organization:${org}`);
-    if (group) filters.push(`groups:${group}`);
-    if (tag) filters.push(`tags:${tag}`);
-    if (format) filters.push(`res_format:${format}`);
+    if (org) filters.push(`organization:"${org}"`);
+    if (group) filters.push(`groups:"${group}"`);
+    if (tag) filters.push(`tags:"${tag}"`);
+    if (format) filters.push(`res_format:"${format}"`);
     return filters.length ? filters.join(" ") : undefined;
   }, [org, group, tag, format]);
 
@@ -155,7 +155,7 @@ export default function Search() {
               >
                 <option value="">All Organizations</option>
                 {normalizeList(orgsQ.data).map((o) => (
-                  <option key={o.id} value={o.id}>
+                  <option key={o.id} value={o.name}>
                     {o.title || o.name}
                   </option>
                 ))}
@@ -193,7 +193,7 @@ export default function Search() {
               >
                 <option value="">All Categories</option>
                 {normalizeList(groupsQ.data).map((g) => (
-                  <option key={g.id} value={g.id}>
+                  <option key={g.id} value={g.name}>
                     {g.title || g.name}
                   </option>
                 ))}
