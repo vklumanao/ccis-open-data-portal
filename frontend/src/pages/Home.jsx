@@ -3,6 +3,7 @@ import { statusShow, searchDatasets } from "../api/ckan";
 import DatasetCard from "../components/DatasetCard";
 import Loading from "../components/Loading";
 import ErrorBox from "../components/ErrorBox";
+import AnalyticsCard from "../components/AnalyticsCard";
 
 export default function Home() {
   const statusQ = useQuery({ queryKey: ["status"], queryFn: statusShow });
@@ -27,6 +28,8 @@ export default function Home() {
         {statusQ.isError && <ErrorBox error={statusQ.error} />}
         {statusQ.data && <p>CKAN is reachable.</p>}
       </section>
+
+      <AnalyticsCard />
 
       <section>
         <h2>Recently Updated</h2>
