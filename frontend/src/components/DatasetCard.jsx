@@ -20,7 +20,7 @@ export default function DatasetCard({ dataset }) {
       </div>
 
       <Link
-        to={`/dataset/${dataset.name}`}
+        to={`/dataset/${dataset.id}`}
         style={{ fontWeight: 800, textDecoration: "none" }}
       >
         View dataset →
