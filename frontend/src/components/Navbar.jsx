@@ -9,7 +9,13 @@ export default function Navbar() {
       <div className="navbar-container">
         <div className="navbar-brand">
           <img
-            src="\src\assets\images\logo\CSU-CCIS-Black-scaled.webp"
+            src="src\assets\images\logo\ccis-logo.webp"
+            alt="CSU CCIS Logo"
+            className="brand-icon"
+            style={{ height: "100px", width: "auto", objectFit: "contain" }}
+          />
+          <img
+            src="src\assets\images\logo\chci-logo.png"
             alt="CSU CCIS Logo"
             className="brand-icon"
             style={{ height: "100px", width: "auto", objectFit: "contain" }}
