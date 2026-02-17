@@ -60,9 +60,21 @@ export default function AnalyticsCard() {
           gap: "var(--spacing-lg)",
         }}
       >
-        <StatTile label="Datasets" value={datasetsCount} icon="📊" />
-        <StatTile label="Organizations" value={orgsCount} icon="🏢" />
-        <StatTile label="Categories" value={groupsCount} icon="📁" />
+        <StatTile
+          label="Datasets"
+          value={datasetsCount}
+          icon={<Icon name="datasets" />}
+        />
+        <StatTile
+          label="Organizations"
+          value={orgsCount}
+          icon={<Icon name="organizations" />}
+        />
+        <StatTile
+          label="Categories"
+          value={groupsCount}
+          icon={<Icon name="categories" />}
+        />
       </div>
     </section>
   );
@@ -119,4 +131,62 @@ function StatTile({ label, value, icon }) {
       </div>
     </div>
   );
+}
+
+function Icon({ name, size = 80 }) {
+  const common = {
+    width: size,
+    height: size,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg",
+  };
+
+  if (name === "datasets") {
+    return (
+      <svg {...common} aria-hidden>
+        <rect x="3" y="4" width="18" height="4" rx="1" fill="var(--primary)" />
+        <rect
+          x="3"
+          y="10"
+          width="18"
+          height="4"
+          rx="1"
+          fill="var(--primary-light)"
+        />
+        <rect
+          x="3"
+          y="16"
+          width="18"
+          height="4"
+          rx="1"
+          fill="var(--background-alt)"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "organizations") {
+    return (
+      <svg {...common} aria-hidden>
+        <path
+          d="M12 2C10.34 2 9 3.34 9 5s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm6 14v2H6v-2c0-2.21 3.58-4 6-4s6 1.79 6 4z"
+          fill="var(--primary)"
+        />
+      </svg>
+    );
+  }
+
+  if (name === "categories") {
+    return (
+      <svg {...common} aria-hidden>
+        <path
+          d="M3 6h18v2H3V6zm0 5h10v2H3v-2zm0 5h6v2H3v-2z"
+          fill="var(--primary)"
+        />
+      </svg>
+    );
+  }
+
+  return null;
 }
