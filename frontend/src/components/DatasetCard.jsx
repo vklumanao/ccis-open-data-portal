@@ -3,9 +3,17 @@ import Badge from "./Badge.jsx";
 
 export default function DatasetCard({ dataset }) {
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100%",
+        height: "100%",
+      }}
+    >
       <h3 style={{ margin: "0 0 8px" }}>{dataset.title || dataset.name}</h3>
-      <p style={{ margin: "0 0 10px", opacity: 0.8 }}>
+      <p style={{ margin: "0 0 10px", opacity: 0.8, flex: 1 }}>
         {(dataset.notes || "").slice(0, 160)}
         {(dataset.notes || "").length > 160 ? "..." : ""}
       </p>
@@ -21,7 +29,7 @@ export default function DatasetCard({ dataset }) {
 
       <Link
         to={`/dataset/${dataset.id}`}
-        style={{ fontWeight: 800, textDecoration: "none" }}
+        style={{ fontWeight: 800, textDecoration: "none", marginTop: "auto" }}
       >
         View dataset →
       </Link>
