@@ -3,6 +3,7 @@ import { listOrgs } from "../api/ckan";
 import Loading from "../components/Loading";
 import ErrorBox from "../components/ErrorBox";
 import { Link } from "react-router-dom";
+import placeholderOrg from "../assets/images/placeholder/organization.svg";
 
 export default function Orgs() {
   const q = useQuery({ queryKey: ["orgs"], queryFn: listOrgs });
@@ -38,20 +39,22 @@ export default function Orgs() {
                 height: "100%",
               }}
             >
-              {imageUrl && (
-                <img
-                  src={imageUrl || "/placeholder-org.png"}
-                  alt={o.title || o.name}
-                  style={{
-                    width: "calc(100% + var(--spacing-xl) * 2)",
-                    height: 220,
-                    objectFit: "cover",
-                    margin:
-                      "calc(var(--spacing-xl) * -1) calc(var(--spacing-xl) * -1) var(--spacing-lg) calc(var(--spacing-xl) * -1)",
-                    borderRadius: "var(--radius-lg) var(--radius-lg) 0 0",
-                  }}
-                />
-              )}
+              <img
+                src={imageUrl || placeholderOrg}
+                alt={o.title || o.name}
+                style={{
+                  width: "calc(100% + var(--spacing-xl) * 2)",
+                  height: 220,
+                  objectFit: "contain",
+                  margin:
+                    "calc(var(--spacing-xl) * -1) calc(var(--spacing-xl) * -1) var(--spacing-lg) calc(var(--spacing-xl) * -1)",
+                  borderRadius: "var(--radius-lg) var(--radius-lg) 0 0",
+                  background: "var(--background-light)",
+                }}
+                onError={(e) => {
+                  e.currentTarget.src = placeholderOrg;
+                }}
+              />
 
               <h3
                 style={{
