@@ -302,8 +302,9 @@ export default function Search() {
 
             {total > pageSize && (
               <Pagination
-                current={page}
-                total={Math.ceil(total / pageSize)}
+                page={page}
+                pageSize={pageSize}
+                total={total}
                 onPageChange={setPage}
               />
             )}
