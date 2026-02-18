@@ -25,7 +25,7 @@ export default function Search() {
   const [sort, setSort] = useState("metadata_modified desc");
 
   const [page, setPage] = useState(1);
-  const pageSize = 20;
+  const pageSize = 10;
 
   const orgsQ = useQuery({ queryKey: ["orgs"], queryFn: listOrgs });
   const groupsQ = useQuery({ queryKey: ["groups"], queryFn: listGroups });
@@ -293,7 +293,7 @@ export default function Search() {
           <div>
             <div
               className="grid grid-cards"
-              style={{ marginBottom: "var(--spacing-2xl)" }}
+              style={{ marginBottom: "1rem" }}
             >
               {datasetsQ.data.results?.map((ds) => (
                 <DatasetCard key={ds.id} dataset={ds} />
