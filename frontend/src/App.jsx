@@ -1,6 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import AppLayout from "./components/AppLayout.jsx";
+import { AuthProvider } from "./context/AuthContext";
+import AdminRoute from "./components/AdminRoute";
+import LoginPage from "./pages/LoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
+import AppLayout from "./components/AppLayout.jsx";
 import Home from "./pages/Home.jsx";
 import Search from "./pages/Search.jsx";
 import DatasetDetail from "./pages/DatasetDetail.jsx";
@@ -12,17 +16,28 @@ import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/datasets" element={<Search />} />
-        <Route path="/dataset/:id" element={<DatasetDetail />} />
-        <Route path="/orgs" element={<Orgs />} />
-        <Route path="/orgs/:id" element={<OrgDetail />} />
-        <Route path="/groups" element={<Groups />} />
-        <Route path="/groups/:id" element={<GroupDetail />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/datasets" element={<Search />} />
+          <Route path="/dataset/:id" element={<DatasetDetail />} />
+          <Route path="/orgs" element={<Orgs />} />
+          <Route path="/orgs/:id" element={<OrgDetail />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups/:id" element={<GroupDetail />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }

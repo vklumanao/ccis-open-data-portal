@@ -1,9 +1,22 @@
 import { NavLink } from "react-router-dom";
 import "../styles/navbar.css";
 
+// Utility functions to check login and admin status
+function isLoggedIn() {
+  return !!localStorage.getItem("ckan_api_token");
+}
+
+function getCurrentUser() {
+  const userStr = localStorage.getItem("ckan_user");
+  return userStr ? JSON.parse(userStr) : null;
+}
+
 const navLinkClass = ({ isActive }) => `nav-link ${isActive ? "active" : ""}`;
 
 export default function Navbar() {
+  const loggedIn = isLoggedIn();
+  const user = getCurrentUser();
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -38,6 +51,30 @@ export default function Navbar() {
           <NavLink to="/groups" className={navLinkClass}>
             Categories
           </NavLink>
+          {/* Show admin link if user is sysadmin */}
+          {loggedIn && user?.sysadmin && (
+            <NavLink to="/admin" className={navLinkClass}>
+              Admin
+            </NavLink>
+          )}
+          {/* Show login/logout links */}
+          {!loggedIn ? (
+            <NavLink to="/login" className={navLinkClass}>
+              Login
+            </NavLink>
+          ) : (
+            <button
+              className="nav-link"
+              style={{ background: "none", border: "none", cursor: "pointer" }}
+              onClick={() => {
+                localStorage.removeItem("ckan_user");
+                localStorage.removeItem("ckan_api_token");
+                window.location.href = "/";
+              }}
+            >
+              Logout
+            </button>
+          )}
         </nav>
       </div>
     </header>
