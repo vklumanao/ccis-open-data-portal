@@ -291,10 +291,7 @@ export default function Search() {
 
         {datasetsQ.data && (
           <div>
-            <div
-              className="grid grid-cards"
-              style={{ marginBottom: "1rem" }}
-            >
+            <div className="grid grid-cards" style={{ marginBottom: "1rem" }}>
               {datasetsQ.data.results?.map((ds) => (
                 <DatasetCard key={ds.id} dataset={ds} />
               ))}
