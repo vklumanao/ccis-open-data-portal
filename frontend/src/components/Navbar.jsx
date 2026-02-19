@@ -1,36 +1,18 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useAuth } from "../context/AuthContext.jsx";
 import "../styles/navbar.css";
 
 const navLinkClass = ({ isActive }) => `nav-link ${isActive ? "active" : ""}`;
 
 export default function Navbar() {
-  const { user, loading, login, logout } = useAuth();
-  const [showLogin, setShowLogin] = useState(false);
-  const [apiKey, setApiKey] = useState("");
-  const [error, setError] = useState("");
-  const [pending, setPending] = useState(false);
-  const navigate = useNavigate();
+  const { user, loading, logout } = useAuth();
+  // const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setPending(true);
-    setError("");
-    try {
-      await login(apiKey);
-      setShowLogin(false);
-      setApiKey("");
-    } catch (err) {
-      setError(err.message || "Login failed");
-    } finally {
-      setPending(false);
-    }
-  };
-
+  // Unified logout logic
   const handleLogout = async () => {
     await logout();
-    navigate("/");
+    // Force reload to ensure all state is reset and Navbar updates
+    window.location.href = "/";
   };
 
   return (
@@ -67,9 +49,16 @@ export default function Navbar() {
           <NavLink to="/groups" className={navLinkClass}>
             Categories
           </NavLink>
-          {user && user.sysadmin && (
+          {/* Show admin link if user is sysadmin */}
+          {user?.sysadmin && (
             <NavLink to="/admin" className={navLinkClass}>
               Admin
+            </NavLink>
+          )}
+          {/* Show login link only if not logged in */}
+          {!user && !loading && (
+            <NavLink to="/login" className={navLinkClass}>
+              Login
             </NavLink>
           )}
         </nav>
@@ -187,15 +176,7 @@ export default function Navbar() {
                 Logout
               </button>
             </div>
-          ) : (
-            <NavLink
-              to="/login"
-              className="btn secondary"
-              style={{ fontSize: 14 }}
-            >
-              Login
-            </NavLink>
-          )}
+          ) : null}
         </div>
       </div>
     </header>
