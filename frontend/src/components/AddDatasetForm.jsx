@@ -102,7 +102,12 @@ export default function AddDatasetForm({ onSuccess }) {
       if (res.data && res.data.success) {
         setSuccess("Dataset created successfully!");
         setForm(DEFAULT_SCHEMA);
-        if (onSuccess) onSuccess(res.data.result);
+        // Delay closing the form so user sees the notification
+        if (onSuccess) {
+          setTimeout(() => {
+            onSuccess(res.data.result);
+          }, 2000);
+        }
       } else {
         setError(res.data?.error?.message || "Failed to create dataset");
       }
