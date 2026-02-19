@@ -13,13 +13,18 @@ export function AuthProvider({ children }) {
     if (!apiKey) {
       setUser(null);
       setLoading(false);
+      localStorage.removeItem("ckan_user");
       return;
     }
     getCurrentUser()
-      .then(setUser)
+      .then((u) => {
+        setUser(u);
+        localStorage.setItem("ckan_user", JSON.stringify(u));
+      })
       .catch(() => {
         setUser(null);
         localStorage.removeItem("ckanApiKey");
+        localStorage.removeItem("ckan_user");
       })
       .finally(() => setLoading(false));
   }, []);
@@ -31,11 +36,13 @@ export function AuthProvider({ children }) {
     try {
       const u = await getCurrentUser();
       setUser(u);
+      localStorage.setItem("ckan_user", JSON.stringify(u));
       setLoading(false);
       return u;
     } catch (err) {
       console.error("Login failed, clearing user state", err);
       localStorage.removeItem("ckanApiKey");
+      localStorage.removeItem("ckan_user");
       setUser(null);
       setTimeout(() => setUser(null), 0); // force re-render
       setLoading(false);
@@ -46,6 +53,7 @@ export function AuthProvider({ children }) {
   // Logout: clear API key and user
   const logout = () => {
     localStorage.removeItem("ckanApiKey");
+    localStorage.removeItem("ckan_user");
     setUser(null);
   };
 

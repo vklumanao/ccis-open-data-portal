@@ -127,6 +127,8 @@ export default function AddDatasetForm({ onSuccess }) {
       onSubmit={handleSubmit}
       style={{
         maxWidth: 800,
+        maxHeight: "80vh",
+        overflowY: "auto",
         margin: "0 auto",
         background: "var(--background-alt)",
         border: "1px solid var(--border)",
