@@ -6,13 +6,12 @@ const navLinkClass = ({ isActive }) => `nav-link ${isActive ? "active" : ""}`;
 
 export default function Navbar() {
   const { user, loading, logout } = useAuth();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // Unified logout logic
+  // SPA logout logic
   const handleLogout = async () => {
     await logout();
-    // Force reload to ensure all state is reset and Navbar updates
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
@@ -62,122 +61,98 @@ export default function Navbar() {
             </NavLink>
           )}
         </nav>
-        <div className="navbar-auth">
-          {loading ? (
-            <span style={{ color: "var(--text-muted)", fontSize: 14 }}>
-              Loading...
-            </span>
-          ) : user ? (
+        {/* Show user info and logout if logged in */}
+        {user && (
+          <div
+            className="navbar-auth"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              marginLeft: 24,
+            }}
+          >
+            {/* Avatar or initial */}
             <div
               style={{
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "#e0e0e0",
                 display: "flex",
                 alignItems: "center",
-                gap: 16,
-                background: "var(--background-alt)",
-                borderRadius: 8,
-                padding: "8px 16px",
-                boxShadow: "var(--shadow-sm)",
-                minWidth: 180,
+                justifyContent: "center",
+                fontWeight: 600,
+                fontSize: 18,
+                color: "#555",
+                marginRight: 8,
+                boxShadow: "var(--shadow-xs)",
+                overflow: "hidden",
               }}
             >
-              {/* User avatar or placeholder */}
+              {user.image_url ? (
+                <img
+                  src={
+                    user.image_url.startsWith("http")
+                      ? user.image_url
+                      : `/ckan-api${user.image_url.startsWith("/") ? user.image_url : "/" + user.image_url}`
+                  }
+                  alt="avatar"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              ) : (
+                (user.display_name || user.name || "U")
+                  .slice(0, 1)
+                  .toUpperCase()
+              )}
+            </div>
+            <div style={{ flex: 1 }}>
               <div
                 style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: "50%",
-                  background: "#e0e0e0",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   fontWeight: 600,
-                  fontSize: 18,
-                  color: "#555",
-                  marginRight: 8,
-                  boxShadow: "var(--shadow-xs)",
-                  overflow: "hidden",
+                  fontSize: 16,
+                  color: "var(--text-primary)",
                 }}
               >
-                {/* Debug: Show image_url as text */}
-                {user.image_url && (
+                {user.display_name || user.name}
+                {user.sysadmin && (
                   <span
+                    className="label"
                     style={{
-                      fontSize: 11,
-                      color: "#888",
-                      wordBreak: "break-all",
-                      display: "block",
-                      marginTop: 2,
+                      marginLeft: 8,
+                      fontSize: 13,
+                      background: "#e6f0ff",
+                      color: "#2563eb",
+                      padding: "2px 8px",
+                      borderRadius: 6,
                     }}
                   >
-                    {user.image_url}
+                    Admin
                   </span>
                 )}
-                {/* Always try to render the image if image_url exists, fixing missing slash */}
-                {user.image_url ? (
-                  <img
-                    src={
-                      user.image_url.startsWith("http")
-                        ? user.image_url
-                        : `/ckan-api${user.image_url.startsWith("/") ? user.image_url : "/" + user.image_url}`
-                    }
-                    alt="avatar"
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      display: "block",
-                      marginTop: 4,
-                    }}
-                    onError={(e) => {
-                      e.target.style.display = "none";
-                    }}
-                  />
-                ) : (
-                  (user.display_name || user.name || "U")
-                    .slice(0, 1)
-                    .toUpperCase()
-                )}
               </div>
-              <div style={{ flex: 1 }}>
-                <div
-                  style={{
-                    fontWeight: 600,
-                    fontSize: 16,
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  {user.display_name || user.name}
-                  {user.sysadmin && (
-                    <span
-                      className="label"
-                      style={{
-                        marginLeft: 8,
-                        fontSize: 13,
-                        background: "#e6f0ff",
-                        color: "#2563eb",
-                        padding: "2px 8px",
-                        borderRadius: 6,
-                      }}
-                    >
-                      Admin
-                    </span>
-                  )}
-                </div>
-                <div style={{ fontSize: 13, color: "var(--text-muted)" }}>
-                  {user.email || ""}
-                </div>
+              <div style={{ fontSize: 13, color: "var(--text-muted)" }}>
+                {user.email || ""}
               </div>
-              <button
-                className="btn secondary"
-                onClick={handleLogout}
-                style={{ fontSize: 14, padding: "6px 16px", borderRadius: 6 }}
-              >
-                Logout
-              </button>
             </div>
-          ) : null}
-        </div>
+            <button
+              className="btn secondary"
+              onClick={handleLogout}
+              style={{ fontSize: 14, padding: "6px 16px", borderRadius: 6 }}
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
